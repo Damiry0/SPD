@@ -4,6 +4,7 @@ lines = file.readlines()
 data = [tuple(int(x) for x in line.strip().split()) for line in lines]
 data.sort(key=lambda x: x[0])
 count = 0
+sortedArray= []
 while len(data) > 0:
     popped = data.pop(0)
     tmp_array = [popped]
@@ -20,6 +21,7 @@ while len(data) > 0:
             tmp = popped[0] - count
             count = count + tmp
         count = count + popped[1]
-
+        sortedArray.append(popped)
 print(count)
+print(sortedArray)
 file.close()
