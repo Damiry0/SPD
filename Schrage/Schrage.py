@@ -9,7 +9,7 @@ for i in range(0, len(data)):
     data1.append((data[i][0], data[i][1], data[i][2], i))
 
 start = timer()
-data1.sort(key=lambda x: x[0])
+data1.sort(key=lambda x: x[0],reverse=True)
 for (a, b, c, d) in data1:
     print("i:", d + 1, "( r:", a, "p:", b, "q:", c, ")")
 
@@ -25,7 +25,7 @@ while len(data1) > 0:
             tmp_array.append(item)
             data1.remove(item)
     tmp_array.sort(key=lambda x: x[2])
-    count += tmp_array[0][1]
+    count += tmp_array[0][1] + tmp_array[0][0]
     sortedArray.append(tmp_array.pop())
     if len(tmp_array) != 0:
         data1.extend(tmp_array)
@@ -34,6 +34,7 @@ while len(data1) > 0:
     for item2 in data1:
         if count >= item2[0]:
             tmp_array.append(item2)
+    tmp_array.sort(key=lambda x: x[2])
     while tmp_array:
         popped=tmp_array.pop()
         tmp_count += popped[1]  # dodatkowe warunki
