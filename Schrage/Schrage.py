@@ -1,6 +1,6 @@
 from timeit import default_timer as timer
 
-file = open("Data/skoczylas.dat", "r")
+file = open("Data/SCHRAGE2.DAT", "r")
 n = file.readline()
 lines = file.readlines()
 data = [tuple(int(x) for x in line.strip().split()) for line in lines]
@@ -44,21 +44,27 @@ resultList = []
 Cmax=0
 waitingList = sorted(data1, key=lambda x: (x[0], -x[2]))
 while len(waitingList) > 0:
-    waitingList = sorted(data1, key=lambda x: (x[0], -x[2]))
+    waitingList = sorted(waitingList, key=lambda x: (x[0], -x[2]))
     popped = waitingList.pop(0)
     resultList.append(popped)
-    Cmax += popped[0] + popped[1]
+    # Cmax += popped[0] + popped[1]
+    if popped[0] > Cmax:
+        Cmax += popped[0] - Cmax  # dodawanie ewentualnego czekania na zadanie
+    Cmax += popped[1]  # zwiekszanie czasu Cmax o czas wykonywania
+    # if Cmax + popped[0] > Cmax+ popped[2]:
+    #     Qtime = Cmax + popped[0]  # najwiekszy aktualnie czas Cmax z czasem stygniecia
     waitingList.sort(key=lambda x: x[2], reverse=True)
-
     array_range = len(waitingList)
+    tmp_array = waitingList.copy()
 
-    for x in range(array_range):
-        if Cmax >= waitingList[x][0]:
-            resultList.append(waitingList[x])
-
-
-
-
+    tmp_cmax=0
+    for item in waitingList:
+        if Cmax >= item[0]:
+            resultList.append(item)
+            tmp_cmax+=item[1]
+            tmp_array.remove(item)
+    Cmax+=tmp_cmax
+    waitingList = tmp_array.copy()
 
 # end = timer()
 # print("Cmax=", count)
