@@ -1,8 +1,8 @@
 from timeit import default_timer as timer
 
 
-def display(List):
-    for (a, b, c, d) in List:
+def display(input_list):
+    for (a, b, c, d) in input_list:
         print("i:", d + 1, "( r:", a, "p:", b, "q:", c, ")")
 
 
