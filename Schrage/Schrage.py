@@ -1,6 +1,6 @@
 from timeit import default_timer as timer
 
-file = open("Data/SCHRAGE2.DAT", "r")
+file = open("Data/skoczylas.dat", "r")
 n = file.readline()
 lines = file.readlines()
 data = [tuple(int(x) for x in line.strip().split()) for line in lines]
@@ -44,7 +44,7 @@ resultList = []
 Cmax = 0
 Qtime = 0
 firstScan = True
-# to perwsze wybranie r musi sie wykontywac tylko raz a potem to juz nie
+# to pierwsze wybranie r musi sie wykonywac tylko raz, a potem to juz nie
 waitingList = sorted(data1, key=lambda x: (x[0], -x[2]))
 while len(waitingList) > 0:
     waitingList = sorted(waitingList, key=lambda x: (x[0], -x[2]))
@@ -65,13 +65,13 @@ while len(waitingList) > 0:
         if Cmax >= item[0]:
             resultList.append(item)
             Cmax += item[1]  # zwiekszanie czasu Cmax o czas wykonywania
-            print("Cmax petla=", Cmax)
+            # print("Cmax petla=", Cmax)
             if Cmax + item[2] > Qtime:
                 Qtime = Cmax + item[2]  # najwiekszy aktualnie czas Cmax z czasem stygniecia
             tmp_array.remove(item)
     waitingList = tmp_array.copy()
 # end = timer()
-print("Qtime=", Qtime)
+print("Cmax (z czasem stygniecia): ", Qtime)
 print("Result")
 for (a, b, c, d) in resultList:
     print("i:", d + 1, "( r:", a, "p:", b, "q:", c, ")")
