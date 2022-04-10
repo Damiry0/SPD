@@ -41,7 +41,8 @@ resultList = []
 #         sortedArray.append(popped)
 #         data1.remove(popped)
 #     count += tmp_count
-Cmax=0
+Cmax = 0
+Qtime = 0
 waitingList = sorted(data1, key=lambda x: (x[0], -x[2]))
 while len(waitingList) > 0:
     waitingList = sorted(waitingList, key=lambda x: (x[0], -x[2]))
@@ -49,25 +50,26 @@ while len(waitingList) > 0:
     resultList.append(popped)
     # Cmax += popped[0] + popped[1]
     if popped[0] > Cmax:
-        Cmax += popped[0] - Cmax  # dodawanie ewentualnego czekania na zadanie
+        Cmax = popped[0]  # dodawanie ewentualnego czekania na zadanie
     Cmax += popped[1]  # zwiekszanie czasu Cmax o czas wykonywania
-    # if Cmax + popped[0] > Cmax+ popped[2]:
-    #     Qtime = Cmax + popped[0]  # najwiekszy aktualnie czas Cmax z czasem stygniecia
+    if Cmax + popped[2] > Qtime:
+        Qtime = Cmax + popped[2]  # najwiekszy aktualnie czas Cmax z czasem stygniecia
+
     waitingList.sort(key=lambda x: x[2], reverse=True)
     array_range = len(waitingList)
     tmp_array = waitingList.copy()
 
-    tmp_cmax=0
     for item in waitingList:
         if Cmax >= item[0]:
             resultList.append(item)
-            tmp_cmax+=item[1]
+            Cmax += item[1]  # zwiekszanie czasu Cmax o czas wykonywania
+            print("Cmax petla=", Cmax)
+            if Cmax + item[2] > Qtime:
+                Qtime = Cmax + item[2]  # najwiekszy aktualnie czas Cmax z czasem stygniecia
             tmp_array.remove(item)
-    Cmax+=tmp_cmax
     waitingList = tmp_array.copy()
-
 # end = timer()
-# print("Cmax=", count)
+print("Qtime=", Qtime)
 print("Result")
 for (a, b, c, d) in resultList:
     print("i:", d + 1, "( r:", a, "p:", b, "q:", c, ")")
