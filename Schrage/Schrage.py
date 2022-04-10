@@ -43,6 +43,8 @@ resultList = []
 #     count += tmp_count
 Cmax = 0
 Qtime = 0
+firstScan = True
+# to perwsze wybranie r musi sie wykontywac tylko raz a potem to juz nie
 waitingList = sorted(data1, key=lambda x: (x[0], -x[2]))
 while len(waitingList) > 0:
     waitingList = sorted(waitingList, key=lambda x: (x[0], -x[2]))
